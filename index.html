@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cron Expression Generator — Visual Crontab Builder, Translator & Next Run Times | Dinal Studios</title>
+<meta name="description" content="Free cron generator: build crontab expressions visually, read them in plain English and preview the next 5 run times in your timezone. Save expressions.">
+<meta name="keywords" content="cron generator, crontab generator, cron expression, cron translator, crontab schedule, cron next run, cron builder, developer tools, sysadmin tools">
+<meta name="author" content="Dinal Studios">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://anaskhan0009.github.io/cron-expression-generator/">
+<meta property="og:title" content="Cron Expression Generator — Visual Crontab Builder, Translator & Next Run Times | Dinal Studios">
+<meta property="og:description" content="Free cron generator: build crontab expressions visually, read them in plain English and preview the next 5 run times in your timezone. Save expressions.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://anaskhan0009.github.io/cron-expression-generator/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cron Expression Generator — Visual Crontab Builder, Translator & Next Run Times | Dinal Studios">
+<meta name="twitter:description" content="Free cron generator: build crontab expressions visually, read them in plain English and preview the next 5 run times in your timezone. Save expressions.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Cron Expression Generator \u2014 Visual Crontab Builder, Translator & Next Run Times",
+  "url": "https://anaskhan0009.github.io/cron-expression-generator/",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any (Web browser)",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "Dinal Studios"
+  }
+}
+</script>
+<style>
+  * { box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+  body { margin: 0; background: #0a0f1a; color: #dbe4f3; }
+  header { background: radial-gradient(1000px 400px at 50% -80px, #14532d 0%, #0a0f1a 60%); padding: 42px 16px 28px; text-align: center; border-bottom: 1px solid #1d2b45; }
+  header h1 { margin: 0 0 8px; font-size: 31px; letter-spacing: .5px; }
+  header h1 span { color: #22c55e; }
+  header p { margin: 0; color: #93a5c4; font-size: 15px; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 22px 14px 46px; }
+  .card { background: #111a2c; border: 1px solid #1f2c47; border-radius: 14px; padding: 22px; margin-bottom: 20px; }
+  .card h2 { margin: 0 0 6px; font-size: 20px; color: #fff; }
+  .card h3 { color: #22c55e; font-size: 15.5px; margin: 18px 0 8px; text-transform: uppercase; letter-spacing: .6px; }
+  .card .sub { color: #93a5c4; font-size: 13.5px; margin: 0 0 16px; line-height: 1.55; }
+  .card p, .card li { font-size: 14.5px; line-height: 1.65; color: #c6d2e8; }
+  .btn { background: #22c55e; color: #06280f; border: none; padding: 10px 18px; border-radius: 9px; cursor: pointer; font-weight: 700; font-size: 14px; }
+  .btn:hover { background: #16a34a; color: #fff; }
+  .btn.dark { background: #1f2c47; color: #dbe4f3; }
+  .btn.dark:hover { background: #2a3a5c; }
+  .btn.danger { background: #7f1d1d; color: #fecaca; }
+  .btn.small { padding: 6px 12px; font-size: 12.5px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+  .tile { background: #0a0f1a; border: 1px solid #1f2c47; border-radius: 10px; padding: 15px; }
+  .tile b { color: #fff; display: block; margin-bottom: 5px; font-size: 14.5px; }
+  .tile span { font-size: 13px; color: #93a5c4; line-height: 1.55; display: block; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 10px 0; }
+  th, td { border: 1px solid #1f2c47; padding: 9px 10px; text-align: left; vertical-align: top; }
+  th { background: #0a0f1a; color: #86efac; }
+  td { color: #c6d2e8; }
+  .bar { height: 14px; background: #22304f; border-radius: 8px; overflow: hidden; margin: 12px 0 8px; }
+  .bar i { display: block; height: 100%; width: 0%; background: #22c55e; transition: width .45s, background .45s; }
+  .scorebig { font-size: 42px; font-weight: 800; color: #fff; line-height: 1; }
+  input[type=text], input[type=email], input[type=password], input[type=number], input[type=date], select, textarea { width: 100%; background: #0a0f1a; border: 1px solid #2a3a5c; color: #fff; border-radius: 8px; padding: 10px 11px; font-size: 14px; margin: 4px 0 12px; }
+  textarea { min-height: 74px; resize: vertical; }
+  label.flabel { font-size: 13px; color: #93a5c4; font-weight: 600; }
+  .item { display: flex; gap: 12px; background: #0a0f1a; border: 1px solid #1f2c47; border-radius: 10px; padding: 13px 14px; margin-bottom: 9px; align-items: flex-start; }
+  .item input[type=checkbox] { width: 20px; height: 20px; accent-color: #22c55e; margin-top: 2px; flex-shrink: 0; cursor: pointer; }
+  .item .t { font-size: 14.5px; color: #fff; font-weight: 600; }
+  .item .d { font-size: 12.5px; color: #93a5c4; margin-top: 2px; line-height: 1.5; }
+  .item.done { border-color: #14532d; opacity: .8; }
+  .rec { background: #0a0f1a; border: 1px solid #1f2c47; border-radius: 10px; padding: 14px; margin-bottom: 10px; }
+  .rec .rt { color: #fff; font-weight: 700; font-size: 15px; margin-bottom: 4px; word-break: break-word; }
+  .rec .rm { font-size: 13px; color: #93a5c4; line-height: 1.6; word-break: break-word; }
+  .rec .rm b { color: #c6d2e8; }
+  .rec .ractions { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .pill { display: inline-block; background: #1f2c47; color: #86efac; border-radius: 999px; padding: 2px 10px; font-size: 11.5px; font-weight: 700; }
+  .pill.red { background: #7f1d1d; color: #fecaca; }
+  .pill.amber { background: #713f12; color: #fde68a; }
+  .authnote { background: #0a0f1a; border: 1px dashed #2a3a5c; border-radius: 10px; padding: 12px 14px; font-size: 13px; color: #fbbf24; line-height: 1.6; margin-top: 12px; }
+  .tabs { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .tab { background: #1f2c47; color: #dbe4f3; border: none; padding: 8px 16px; border-radius: 999px; cursor: pointer; font-weight: 700; font-size: 13px; }
+  .tab.on { background: #22c55e; color: #06280f; }
+  .msg { font-size: 13.5px; margin: 8px 0; min-height: 18px; }
+  .msg.err { color: #fca5a5; } .msg.ok { color: #86efac; }
+  .stepbtn { text-align: left; width: 100%; background: #0a0f1a; border: 1px solid #1f2c47; color: #dbe4f3; border-radius: 10px; padding: 13px 14px; margin-bottom: 9px; cursor: pointer; font-size: 14px; }
+  .stepbtn.on { border-color: #22c55e; }
+  .stepbtn b { color: #fff; }
+  .reveal { display: none; background: #0d1526; border: 1px solid #14532d; border-radius: 10px; padding: 13px 14px; margin: -3px 0 12px; font-size: 13.5px; line-height: 1.6; color: #c6d2e8; }
+  .optbtn { display: block; width: 100%; text-align: left; background: #0a0f1a; border: 1px solid #1f2c47; color: #dbe4f3; border-radius: 10px; padding: 11px 13px; margin-bottom: 8px; cursor: pointer; font-size: 14px; }
+  .optbtn:hover { border-color: #2a3a5c; }
+  .optbtn.right { border-color: #22c55e; background: #0d2013; }
+  .optbtn.wrong { border-color: #dc2626; background: #260d0d; }
+  .muted { color: #93a5c4; font-size: 13px; line-height: 1.6; }
+  .rowflex { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  footer { text-align: center; color: #64748b; font-size: 13px; padding: 26px 14px 40px; border-top: 1px solid #1d2b45; }
+  footer a { color: #22c55e; text-decoration: none; }
+
+</style>
+<style>
+
+  .mono { font-family: 'Consolas', 'Courier New', monospace; }
+  .cronbig { background: #0a0f1a; border: 1px dashed #22c55e; border-radius: 10px; padding: 16px; font-size: 26px; text-align: center; color: #fff; letter-spacing: 3px; margin-bottom: 12px; }
+  .cronfield { background: #0a0f1a; border: 1px solid #1f2c47; border-radius: 10px; padding: 13px 14px; margin-bottom: 10px; }
+  .cronpick { display: grid; grid-template-columns: repeat(auto-fill, minmax(74px, 1fr)); gap: 4px 10px; }
+  .cronpick label { font-size: 12.5px; color: #c6d2e8; display: flex; gap: 5px; align-items: center; cursor: pointer; }
+  .cronpick input { accent-color: #22c55e; }
+
+</style>
+</head>
+<body>
+<header>
+  <h1>Cron Expression <span>Generator</span></h1>
+  <p>Build crontab schedules by clicking, read them in plain English, and see exactly when they will run.</p>
+</header>
+<div class="wrap">
+  <div class="card">
+    <h2>👤 Your account</h2>
+    <div id="dsAuthArea"></div>
+  </div>
+
+  <div class="card">
+    <h2>🛠 Visual builder</h2>
+    <p class="sub">For each of the five fields, choose <b>Every</b>, an <b>Every-N step</b>, a <b>Range</b>, or <b>Specific values</b>. The expression, its translation and its next run times update as you click.</p>
+    <div id="cronFields"></div>
+    <h3>Your cron expression</h3>
+    <div class="cronbig mono" id="cronExprBig">* * * * *</div>
+    <div class="rowflex">
+      <button class="btn" onclick="cronCopy()">📋 Copy expression</button>
+      <span class="muted">Fields: minute · hour · day of month · month · day of week</span>
+    </div>
+    <label class="flabel" style="margin-top:14px;">Or type / paste an expression manually</label>
+    <input type="text" id="cronManual" class="mono" placeholder="*/15 9-17 * * 1-5" oninput="cronRender(this.value)">
+    <div class="msg err" id="cronErr"></div>
+  </div>
+
+  <div class="card">
+    <h2>🗣 In plain English</h2>
+    <p id="cronHuman" style="font-size:17px;color:#fff;margin:4px 0 0;">Every minute.</p>
+    <h3>Next 5 run times</h3>
+    <div id="cronNext"></div>
+    <p class="muted">Computed live for your device's timezone. Remember: servers often run on UTC — a 9 AM cron on a UTC server is not 9 AM where you live.</p>
+  </div>
+
+  <div class="card">
+    <h2>⭐ Common presets</h2>
+    <div class="rowflex">
+      <button class="btn dark small" onclick="cronPreset('* * * * *')">Every minute</button>
+      <button class="btn dark small" onclick="cronPreset('*/15 * * * *')">Every 15 minutes</button>
+      <button class="btn dark small" onclick="cronPreset('0 * * * *')">Every hour</button>
+      <button class="btn dark small" onclick="cronPreset('0 0 * * *')">Daily at midnight</button>
+      <button class="btn dark small" onclick="cronPreset('0 9 * * *')">Daily at 9:00</button>
+      <button class="btn dark small" onclick="cronPreset('0 9 * * 1-5')">Weekdays at 9:00</button>
+      <button class="btn dark small" onclick="cronPreset('0 0 * * 0')">Sundays at midnight</button>
+      <button class="btn dark small" onclick="cronPreset('0 0 1 * *')">1st of the month</button>
+      <button class="btn dark small" onclick="cronPreset('30 2 * * 6')">Saturdays 02:30 (backup window)</button>
+    </div>
+  </div>
+
+  <div class="card" style="border-style:dashed;">
+    <p class="sub" style="margin:0 0 10px;">Keep this schedule? Label it and save it to your collection:</p>
+    <div class="rowflex">
+      <input type="text" id="cronSaveLabel" placeholder="Label — e.g. Nightly database backup" style="flex:2;min-width:200px;margin:0;">
+      <button class="btn dark" onclick="cronSave()">💾 Save expression</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 Cron in 60 seconds</h2>
+    <div class="grid">
+      <div class="tile"><b>The five fields</b><span><span class="mono">* * * * *</span> = minute (0–59), hour (0–23), day of month (1–31), month (1–12), day of week (0–7, where both 0 and 7 mean Sunday).</span></div>
+      <div class="tile"><b>The four operators</b><span><span class="mono">*</span> = every · <span class="mono">,</span> = list (<span class="mono">1,15</span>) · <span class="mono">-</span> = range (<span class="mono">9-17</span>) · <span class="mono">/</span> = step (<span class="mono">*/15</span> = every 15).</span></div>
+      <div class="tile"><b>The day trap</b><span>If BOTH day-of-month and day-of-week are restricted, cron runs when <b>either</b> matches — the classic cause of "it ran on the wrong day".</span></div>
+      <div class="tile"><b>The timezone trap</b><span>Cron uses the <b>server's</b> clock. Production servers usually run UTC; your 21:45 PKT job is <span class="mono">45 16 * * *</span> in UTC.</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🕐 My Cron Expressions</h2>
+    <p class="sub">Every schedule you run in production, labelled in words you will understand at 3 AM. Records are saved under your local account (or guest space) on this device — create, view, edit and delete them any time.</p>
+    <div id="dsRecordForm"></div>
+    <div id="dsRecordList" style="margin-top:18px;"></div>
+  </div>
+</div>
+<section style="max-width:880px;margin:34px auto 0;padding:20px 14px 6px;text-align:center;">
+  <h2 style="font-size:1rem;margin:0 0 10px;color:#94a3b8;">More free tools by Dinal Studios</h2>
+  <ul style="list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center;">
+      <li><a href="https://anaskhan0009.github.io/linux-security-commands-guide/">Linux Security Commands Guide</a></li>
+      <li><a href="https://anaskhan0009.github.io/backup-strategy-planner/">3-2-1 Backup Strategy Planner</a></li>
+      <li><a href="https://anaskhan0009.github.io/small-business-security-checklist/">Small Business Security Checklist</a></li>
+      <li><a href="https://anaskhan0009.github.io/subnet-calculator-tool/">Subnet Calculator Tool</a></li>
+      <li><a href="https://anaskhan0009.github.io/cyber-security-glossary/">Cyber Security Glossary</a></li>
+      <li><a href="https://anaskhan0009.github.io/personal-security-audit-checklist/">Personal Security Audit Checklist</a></li>
+  </ul>
+</section>
+<footer>Built by <a href="https://github.com/anaskhan0009">Dinal Studios</a> · Free developer &amp; cyber security tools · Everything runs locally in your browser — no data is sent anywhere.</footer>
+<script>
+var DS_APP_ID = "cron-expression-generator";
+var DS_RECORD_CONFIG = {"nounSingular": "cron expression", "nounPlural": "cron expressions", "titleField": "label", "fields": [{"key": "label", "label": "Label", "type": "text", "required": true, "placeholder": "e.g. Nightly database backup"}, {"key": "expression", "label": "Expression", "type": "text", "required": true, "placeholder": "0 2 * * *"}, {"key": "notes", "label": "Notes", "type": "textarea", "placeholder": "Which server? What does it run? Timezone?"}]};
+</script>
+<script>
+/* ==CORE-START== */
+function ds_sha256(text){
+  var enc = new TextEncoder().encode(text);
+  return crypto.subtle.digest("SHA-256", enc).then(function(buf){
+    return Array.prototype.map.call(new Uint8Array(buf), function(b){ return ("00" + b.toString(16)).slice(-2); }).join("");
+  });
+}
+function ds_randomHex(bytes){
+  var a = new Uint8Array(bytes); crypto.getRandomValues(a);
+  return Array.prototype.map.call(a, function(b){ return ("00" + b.toString(16)).slice(-2); }).join("");
+}
+function ds_storeGet(key, fallback){
+  try { var v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch(e){ return fallback; }
+}
+function ds_storeSet(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
+
+var DSAuth = {
+  usersKey: function(){ return "ds_users_" + DS_APP_ID; },
+  sessionKey: function(){ return "ds_session_" + DS_APP_ID; },
+  users: function(){ return ds_storeGet(this.usersKey(), []); },
+  saveUsers: function(u){ ds_storeSet(this.usersKey(), u); },
+  publicUser: function(u){ return { id: u.id, name: u.name, email: u.email, createdAt: u.createdAt }; },
+  signup: function(name, email, password){
+    name = (name || "").trim(); email = (email || "").trim().toLowerCase();
+    if(!name) return Promise.reject(new Error("Please enter your name."));
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return Promise.reject(new Error("Please enter a valid email address."));
+    if(!password || password.length < 6) return Promise.reject(new Error("Password must be at least 6 characters."));
+    var users = this.users(), i;
+    for(i = 0; i < users.length; i++){ if(users[i].email === email) return Promise.reject(new Error("An account with this email already exists on this device.")); }
+    var salt = ds_randomHex(16), self = this;
+    return ds_sha256(salt + ":" + password).then(function(hash){
+      var user = { id: "u_" + ds_randomHex(8), name: name, email: email, salt: salt, hash: hash, createdAt: new Date().toISOString() };
+      users.push(user); self.saveUsers(users); self.setSession(user.id);
+      return self.publicUser(user);
+    });
+  },
+  login: function(email, password){
+    email = (email || "").trim().toLowerCase();
+    var users = this.users(), user = null, i;
+    for(i = 0; i < users.length; i++){ if(users[i].email === email) user = users[i]; }
+    if(!user) return Promise.reject(new Error("No account found for that email on this device."));
+    var self = this;
+    return ds_sha256(user.salt + ":" + (password || "")).then(function(hash){
+      if(hash !== user.hash) throw new Error("Incorrect password.");
+      self.setSession(user.id); return self.publicUser(user);
+    });
+  },
+  continueAsGuest: function(){ this.setSession("guest"); },
+  logout: function(){ localStorage.removeItem(this.sessionKey()); },
+  setSession: function(id){ ds_storeSet(this.sessionKey(), { userId: id, at: new Date().toISOString() }); },
+  session: function(){ return ds_storeGet(this.sessionKey(), null); },
+  currentUser: function(){
+    var s = this.session(); if(!s || !s.userId || s.userId === "guest") return null;
+    var users = this.users(), i;
+    for(i = 0; i < users.length; i++){ if(users[i].id === s.userId) return this.publicUser(users[i]); }
+    return null;
+  },
+  isGuest: function(){ var s = this.session(); return !s || s.userId === "guest"; },
+  bucketId: function(){ var u = this.currentUser(); return u ? u.id : "guest"; },
+  deleteAccount: function(){
+    var u = this.currentUser(); if(!u) return false;
+    var users = this.users().filter(function(x){ return x.id !== u.id; });
+    this.saveUsers(users);
+    localStorage.removeItem(DSRecords.keyFor(u.id));
+    this.logout(); return true;
+  }
+};
+
+var DSRecords = {
+  keyFor: function(bucket){ return "ds_records_" + DS_APP_ID + "_" + bucket; },
+  key: function(){ return this.keyFor(DSAuth.bucketId()); },
+  list: function(){ return ds_storeGet(this.key(), []); },
+  save: function(rows){ ds_storeSet(this.key(), rows); },
+  create: function(data){
+    var rows = this.list();
+    var rec = { id: "r_" + ds_randomHex(8), createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
+    for(var k in data) rec[k] = data[k];
+    rows.unshift(rec); this.save(rows); return rec;
+  },
+  get: function(id){
+    var rows = this.list();
+    for(var i = 0; i < rows.length; i++) if(rows[i].id === id) return rows[i];
+    return null;
+  },
+  update: function(id, data){
+    var rows = this.list(), i, k;
+    for(i = 0; i < rows.length; i++){
+      if(rows[i].id === id){
+        for(k in data) rows[i][k] = data[k];
+        rows[i].updatedAt = new Date().toISOString(); this.save(rows); return rows[i];
+      }
+    }
+    return null;
+  },
+  remove: function(id){ this.save(this.list().filter(function(r){ return r.id !== id; })); },
+  exportJSON: function(){ return JSON.stringify(this.list(), null, 2); },
+  importJSON: function(text){
+    var parsed = JSON.parse(text);
+    if(!Array.isArray(parsed)) throw new Error("Import file must be a JSON array of records.");
+    var rows = this.list(), added = 0;
+    parsed.forEach(function(r){
+      if(r && typeof r === "object"){
+        if(!r.id) r.id = "r_" + ds_randomHex(8);
+        if(!r.createdAt) r.createdAt = new Date().toISOString();
+        r.updatedAt = new Date().toISOString();
+        rows.push(r); added++;
+      }
+    });
+    this.save(rows); return added;
+  }
+};
+/* ==CORE-END== */
+</script>
+<script>
+/* ==UI-START== */
+var DS_EDITING_ID = null;
+function dsEl(id){ return document.getElementById(id); }
+function dsEsc(s){ return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+
+function dsRenderAuth(){
+  var area = dsEl("dsAuthArea"); if(!area) return;
+  var user = DSAuth.currentUser(), sess = DSAuth.session();
+  var note = '<div class="authnote">🔒 <b>Local account</b> — your data stays on this device only. This is not a cloud account; use a unique password you don\'t use elsewhere.</div>';
+  if(user){
+    area.innerHTML =
+      '<div class="rowflex" style="justify-content:space-between;">' +
+        '<div><b style="color:#fff;font-size:16px;">👤 ' + dsEsc(user.name) + '</b><div class="muted">' + dsEsc(user.email) + ' · Local account on this device</div></div>' +
+        '<div class="rowflex"><button class="btn dark small" onclick="dsScrollSettings()">Profile &amp; settings</button>' +
+        '<button class="btn dark small" onclick="dsDoLogout()">Log out</button></div>' +
+      '</div>' + note +
+      '<div id="dsSettings" style="display:none;margin-top:16px;border-top:1px solid #1f2c47;padding-top:14px;">' +
+        '<h3 style="margin-top:0;">Profile &amp; settings</h3>' +
+        '<p class="muted">Account created: ' + dsEsc((user.createdAt || "").slice(0, 10)) + ' · Records are stored per account on this device.</p>' +
+        '<div class="rowflex">' +
+          '<button class="btn dark small" onclick="dsExportRecords()">⬇ Export my records (JSON)</button>' +
+          '<label class="btn dark small" style="cursor:pointer;">⬆ Import records (JSON)<input type="file" accept=".json,application/json" style="display:none;" onchange="dsImportRecords(this)"></label>' +
+          '<button class="btn danger small" onclick="dsDeleteAccount()">Delete my account</button>' +
+        '</div><div class="msg" id="dsSettingsMsg"></div>' +
+      '</div>';
+  } else if(sess && sess.userId === "guest"){
+    area.innerHTML =
+      '<div class="rowflex" style="justify-content:space-between;">' +
+        '<div><b style="color:#fff;font-size:16px;">👀 Browsing as guest</b><div class="muted">The tool works fully. Anything you save is kept in a guest space on this device only.</div></div>' +
+        '<button class="btn dark small" onclick="dsShowAuthForms()">Log in / Sign up</button>' +
+      '</div><div id="dsAuthForms" style="display:none;">' + dsAuthFormsHTML() + '</div>' + note;
+  } else {
+    area.innerHTML = '<p class="sub" style="margin-bottom:4px;">Create a free local account to save your records, plans and progress on this device — or just continue as a guest.</p>' + dsAuthFormsHTML() + note;
+  }
+}
+function dsAuthFormsHTML(){
+  return '<div class="tabs"><button class="tab on" id="dsTabSignup" onclick="dsAuthTab(\'signup\')">Sign up</button>' +
+    '<button class="tab" id="dsTabLogin" onclick="dsAuthTab(\'login\')">Log in</button></div>' +
+    '<div id="dsSignupForm">' +
+      '<label class="flabel">Name</label><input type="text" id="dsSuName" placeholder="Your name" autocomplete="name">' +
+      '<label class="flabel">Email</label><input type="email" id="dsSuEmail" placeholder="you@example.com" autocomplete="email">' +
+      '<label class="flabel">Password (min. 6 characters)</label><input type="password" id="dsSuPass" placeholder="A unique password for this app" autocomplete="new-password">' +
+      '<button class="btn" onclick="dsDoSignup()">Create local account</button>' +
+    '</div>' +
+    '<div id="dsLoginForm" style="display:none;">' +
+      '<label class="flabel">Email</label><input type="email" id="dsLiEmail" placeholder="you@example.com" autocomplete="email">' +
+      '<label class="flabel">Password</label><input type="password" id="dsLiPass" placeholder="Your password" autocomplete="current-password">' +
+      '<button class="btn" onclick="dsDoLogin()">Log in</button>' +
+    '</div>' +
+    '<div class="msg" id="dsAuthMsg"></div>' +
+    '<button class="btn dark" onclick="dsDoGuest()">Continue as guest →</button>';
+}
+function dsShowAuthForms(){ var f = dsEl("dsAuthForms"); if(f) f.style.display = "block"; }
+function dsScrollSettings(){ var s = dsEl("dsSettings"); if(s){ s.style.display = "block"; s.scrollIntoView({ behavior: "smooth", block: "center" }); } }
+function dsAuthTab(which){
+  dsEl("dsSignupForm").style.display = which === "signup" ? "block" : "none";
+  dsEl("dsLoginForm").style.display = which === "login" ? "block" : "none";
+  dsEl("dsTabSignup").className = "tab" + (which === "signup" ? " on" : "");
+  dsEl("dsTabLogin").className = "tab" + (which === "login" ? " on" : "");
+}
+function dsAuthError(e){ var m = dsEl("dsAuthMsg"); if(m){ m.className = "msg err"; m.textContent = (e && e.message) || String(e); } }
+function dsDoSignup(){
+  DSAuth.signup(dsEl("dsSuName").value, dsEl("dsSuEmail").value, dsEl("dsSuPass").value)
+    .then(function(){ DS_EDITING_ID = null; dsRenderAuth(); dsRenderRecords(); })
+    .catch(dsAuthError);
+}
+function dsDoLogin(){
+  DSAuth.login(dsEl("dsLiEmail").value, dsEl("dsLiPass").value)
+    .then(function(){ DS_EDITING_ID = null; dsRenderAuth(); dsRenderRecords(); })
+    .catch(dsAuthError);
+}
+function dsDoGuest(){ DSAuth.continueAsGuest(); dsRenderAuth(); dsRenderRecords(); }
+function dsDoLogout(){ DSAuth.logout(); DS_EDITING_ID = null; dsRenderAuth(); dsRenderRecords(); }
+function dsDeleteAccount(){
+  if(!confirm("Delete your local account and ALL its saved records from this device? This cannot be undone.")) return;
+  DSAuth.deleteAccount(); DS_EDITING_ID = null; dsRenderAuth(); dsRenderRecords();
+}
+function dsExportRecords(){
+  var blob = new Blob([DSRecords.exportJSON()], { type: "application/json" });
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = DS_APP_ID + "-records.json";
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  var m = dsEl("dsSettingsMsg"); if(m){ m.className = "msg ok"; m.textContent = "Records exported as JSON."; }
+}
+function dsImportRecords(input){
+  var file = input.files && input.files[0]; if(!file) return;
+  var reader = new FileReader(), m = dsEl("dsSettingsMsg");
+  reader.onload = function(){
+    try {
+      var n = DSRecords.importJSON(String(reader.result));
+      if(m){ m.className = "msg ok"; m.textContent = "Imported " + n + " record(s)."; }
+      dsRenderRecords();
+    } catch(e){ if(m){ m.className = "msg err"; m.textContent = "Import failed: " + e.message; } }
+  };
+  reader.readAsText(file); input.value = "";
+}
+
+function dsFieldInput(f, val){
+  var v = val == null ? "" : val, req = f.required ? " required" : "";
+  if(f.type === "textarea") return '<textarea id="dsF_' + f.key + '" placeholder="' + dsEsc(f.placeholder || "") + '"' + req + '>' + dsEsc(v) + '</textarea>';
+  if(f.type === "select"){
+    var out = '<select id="dsF_' + f.key + '">';
+    (f.options || []).forEach(function(o){ out += '<option value="' + dsEsc(o) + '"' + (String(v) === String(o) ? " selected" : "") + '>' + dsEsc(o) + '</option>'; });
+    return out + '</select>';
+  }
+  return '<input type="' + f.type + '" id="dsF_' + f.key + '" value="' + dsEsc(v) + '" placeholder="' + dsEsc(f.placeholder || "") + '"' + req + '>';
+}
+function dsRenderRecordForm(){
+  var host = dsEl("dsRecordForm"); if(!host) return;
+  var cfg = DS_RECORD_CONFIG, rec = DS_EDITING_ID ? DSRecords.get(DS_EDITING_ID) : null;
+  var html = '<h3 style="margin-top:0;">' + (rec ? "Edit" : "Add") + " " + dsEsc(cfg.nounSingular) + '</h3>';
+  cfg.fields.forEach(function(f){
+    html += '<label class="flabel">' + dsEsc(f.label) + (f.hint ? ' <span style="color:#64748b;">— ' + dsEsc(f.hint) + '</span>' : "") + '</label>' + dsFieldInput(f, rec ? rec[f.key] : (f.def || ""));
+  });
+  html += '<div class="rowflex"><button class="btn" onclick="dsSaveRecord()">' + (rec ? "Save changes" : "Add " + dsEsc(cfg.nounSingular)) + '</button>';
+  if(rec) html += '<button class="btn dark" onclick="dsCancelEdit()">Cancel</button>';
+  html += '</div><div class="msg" id="dsRecMsg"></div>';
+  host.innerHTML = html;
+}
+function dsSaveRecord(){
+  var cfg = DS_RECORD_CONFIG, data = {}, ok = true;
+  cfg.fields.forEach(function(f){
+    var el = dsEl("dsF_" + f.key); var v = el ? el.value.trim() : "";
+    if(f.required && !v) ok = false;
+    data[f.key] = f.type === "number" ? (v === "" ? "" : Number(v)) : v;
+  });
+  var m = dsEl("dsRecMsg");
+  if(!ok){ if(m){ m.className = "msg err"; m.textContent = "Please fill in the required fields."; } return; }
+  if(DS_EDITING_ID) DSRecords.update(DS_EDITING_ID, data); else DSRecords.create(data);
+  DS_EDITING_ID = null; dsRenderRecordForm(); dsRenderRecordList();
+}
+function dsEditRecord(id){ DS_EDITING_ID = id; dsRenderRecordForm(); dsEl("dsRecordForm").scrollIntoView({ behavior: "smooth", block: "center" }); }
+function dsCancelEdit(){ DS_EDITING_ID = null; dsRenderRecordForm(); }
+function dsDeleteRecord(id){
+  if(!confirm("Delete this record? This cannot be undone.")) return;
+  if(DS_EDITING_ID === id) DS_EDITING_ID = null;
+  DSRecords.remove(id); dsRenderRecordForm(); dsRenderRecordList();
+}
+function dsPillClass(v){
+  var s = String(v || "").toLowerCase();
+  if(/done|in place|looks fine|valid|safe|low/.test(s)) return "pill";
+  if(/avoid|high|error|no https|blocked|scam/.test(s)) return "pill red";
+  if(/caution|progress|started|review|medium|partial/.test(s)) return "pill amber";
+  return "pill";
+}
+function dsRenderRecordList(){
+  var host = dsEl("dsRecordList"); if(!host) return;
+  var cfg = DS_RECORD_CONFIG, rows = DSRecords.list();
+  var html = "";
+  if(cfg.progressField){
+    var done = rows.filter(function(r){ return r[cfg.progressField] === cfg.progressDoneValue; }).length;
+    var pct = rows.length ? Math.round(done / rows.length * 100) : 0;
+    html += '<p class="muted" style="margin-top:0;">Progress: <b style="color:#fff;">' + done + " / " + rows.length + '</b> done (' + pct + '%)</p><div class="bar"><i style="width:' + pct + '%;"></i></div>';
+  }
+  if(!rows.length){
+    html += '<p class="muted">No ' + dsEsc(cfg.nounPlural) + ' saved yet. Add your first one with the form — it stays saved under your account on this device.</p>';
+  }
+  rows.forEach(function(r){
+    html += '<div class="rec"><div class="rt">' + dsEsc(r[cfg.titleField] || "(untitled)") + '</div><div class="rm">';
+    cfg.fields.forEach(function(f){
+      if(f.key === cfg.titleField) return;
+      var v = r[f.key]; if(v === "" || v == null) return;
+      if(f.type === "select") html += '<span class="' + dsPillClass(v) + '">' + dsEsc(v) + '</span> ';
+      else html += '<b>' + dsEsc(f.label) + ':</b> ' + dsEsc(v) + "<br>";
+    });
+    html += '<br><span style="color:#64748b;">Saved ' + dsEsc((r.createdAt || "").slice(0, 10)) + (r.updatedAt && r.updatedAt !== r.createdAt ? " · edited " + dsEsc(r.updatedAt.slice(0, 10)) : "") + '</span></div>';
+    html += '<div class="ractions"><button class="btn dark small" onclick="dsEditRecord(\'' + r.id + '\')">✏️ Edit</button>' +
+            '<button class="btn danger small" onclick="dsDeleteRecord(\'' + r.id + '\')">🗑 Delete</button></div></div>';
+  });
+  host.innerHTML = html;
+}
+function dsRenderRecords(){ dsRenderRecordForm(); dsRenderRecordList(); }
+document.addEventListener("DOMContentLoaded", function(){ dsRenderAuth(); dsRenderRecords(); if(window.DS_TOOL_INIT) DS_TOOL_INIT(); });
+/* ==UI-END== */
+</script>
+<script>
+
+/* ==PURE-START== */
+var CRON_MONTH_NAMES = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+var CRON_DOW_NAMES = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+function cronFieldSet(field, min, max){
+  var set = {};
+  String(field).split(",").forEach(function(part){
+    part = part.trim(); if(!part) return;
+    var step = 1, base = part, slash = part.indexOf("/");
+    if(slash !== -1){ base = part.slice(0, slash); step = parseInt(part.slice(slash + 1), 10) || 1; }
+    var lo, hi;
+    if(base === "*"){ lo = min; hi = max; }
+    else if(base.indexOf("-") !== -1){
+      var ab = base.split("-"); lo = parseInt(ab[0], 10); hi = parseInt(ab[1], 10);
+    } else {
+      var v = parseInt(base, 10);
+      if(isNaN(v)) return;
+      if(slash !== -1){ lo = v; hi = max; } else { set[v] = true; return; }
+    }
+    for(var x = lo; x <= hi; x += step) set[x] = true;
+  });
+  return set;
+}
+function cronDayMatches(d, domSet, dowSet, domRestricted, dowRestricted){
+  var domOk = !!domSet[d.getDate()];
+  var dowOk = !!dowSet[d.getDay()];
+  if(domRestricted && dowRestricted) return domOk || dowOk;
+  if(domRestricted) return domOk;
+  if(dowRestricted) return dowOk;
+  return true;
+}
+function cronNextRuns(expr, fromDate, count){
+  var f = String(expr).trim().split(/\s+/);
+  if(f.length !== 5) throw new Error("A cron expression needs exactly 5 fields: minute hour day-of-month month day-of-week.");
+  var minSet = cronFieldSet(f[0], 0, 59), hourSet = cronFieldSet(f[1], 0, 23),
+      domSet = cronFieldSet(f[2], 1, 31), monSet = cronFieldSet(f[3], 1, 12),
+      dowRaw = cronFieldSet(f[4], 0, 7), dowSet = {};
+  Object.keys(dowRaw).forEach(function(k){ dowSet[(+k) % 7] = true; });
+  var domR = f[2] !== "*", dowR = f[4] !== "*";
+  var d = new Date(fromDate.getTime());
+  d.setSeconds(0, 0);
+  d = new Date(d.getTime() + 60000);
+  var out = [], guard = 0, LIMIT = 2100000;
+  while(out.length < count && guard < LIMIT){
+    if(minSet[d.getMinutes()] && hourSet[d.getHours()] && monSet[d.getMonth() + 1] &&
+       cronDayMatches(d, domSet, dowSet, domR, dowR)){
+      out.push(new Date(d.getTime()));
+    }
+    d = new Date(d.getTime() + 60000);
+    guard++;
+  }
+  if(!out.length) throw new Error("No run time found within the next 4 years — check the expression.");
+  return out;
+}
+function cronDescribeField(field, kind){
+  field = String(field).trim();
+  function val(v){
+    if(kind === "month") return CRON_MONTH_NAMES[v - 1];
+    if(kind === "dow") return CRON_DOW_NAMES[v % 7];
+    return String(v);
+  }
+  function everyWord(){
+    if(kind === "dow") return "day of the week";
+    if(kind === "day") return "day of the month";
+    return kind;
+  }
+  function single(p){
+    var step = null, base = p;
+    if(p.indexOf("/") !== -1){ var s = p.split("/"); base = s[0]; step = s[1]; }
+    if(base === "*") return step ? ("every " + step + " " + everyWord() + "s") : ("every " + everyWord());
+    if(base.indexOf("-") !== -1){
+      var ab = base.split("-");
+      if(step) return "every " + step + " " + everyWord() + "s from " + val(+ab[0]) + " to " + val(+ab[1]);
+      if(kind === "month") return "in " + val(+ab[0]) + " through " + val(+ab[1]);
+      if(kind === "dow") return "on " + val(+ab[0]) + " through " + val(+ab[1]);
+      if(kind === "day") return "on days " + ab[0] + " through " + ab[1] + " of the month";
+      return everyWord() + "s " + ab[0] + " through " + ab[1];
+    }
+    var v = parseInt(base, 10);
+    if(kind === "month") return "in " + val(v);
+    if(kind === "dow") return "on " + val(v);
+    if(kind === "day") return "on day " + v + " of the month";
+    return "at " + kind + " " + v;
+  }
+  if(field.indexOf(",") !== -1) return field.split(",").map(single).join(", ");
+  return single(field);
+}
+function cronTranslate(expr){
+  var f = String(expr).trim().split(/\s+/);
+  if(f.length !== 5) return "Enter a valid 5-field expression to see its translation.";
+  var parts = [];
+  var minSingle = /^\d+$/.test(f[0]), hourSingle = /^\d+$/.test(f[1]);
+  if(minSingle && hourSingle){
+    parts.push("At " + ("0" + f[1]).slice(-2) + ":" + ("0" + f[0]).slice(-2));
+  } else {
+    parts.push("Runs " + cronDescribeField(f[0], "minute") + ", " + cronDescribeField(f[1], "hour"));
+  }
+  if(f[2] !== "*") parts.push(cronDescribeField(f[2], "day"));
+  if(f[3] !== "*") parts.push(cronDescribeField(f[3], "month"));
+  if(f[4] !== "*") parts.push(cronDescribeField(f[4], "dow"));
+  if(f[2] === "*" && f[4] === "*") parts.push("every day");
+  return parts.join(", ") + ".";
+}
+/* ==PURE-END== */
+
+var CRON_FIELDS = [
+  { key: "minute", label: "Minute", min: 0, max: 59 },
+  { key: "hour", label: "Hour", min: 0, max: 23 },
+  { key: "dom", label: "Day of month", min: 1, max: 31 },
+  { key: "month", label: "Month", min: 1, max: 12, names: CRON_MONTH_NAMES },
+  { key: "dow", label: "Day of week", min: 0, max: 6, names: CRON_DOW_NAMES }
+];
+var cronState = {};
+CRON_FIELDS.forEach(function(f){ cronState[f.key] = { mode: "every", step: 5, from: f.min, to: f.max, picked: {} }; });
+
+function cronBuildFields(){
+  var host = document.getElementById("cronFields");
+  var html = "";
+  CRON_FIELDS.forEach(function(f){
+    html += '<div class="cronfield"><div class="rowflex" style="justify-content:space-between;"><b style="color:#fff;">' + f.label + '</b>' +
+      '<select id="cm_' + f.key + '" onchange="cronModeChange(\'' + f.key + '\')" style="width:auto;margin:0;">' +
+      '<option value="every">Every</option><option value="step">Every N (step)</option><option value="range">Range</option><option value="specific">Specific values</option></select></div>' +
+      '<div id="cs_' + f.key + '" style="display:none;margin-top:8px;" class="rowflex">Every <input type="number" id="cstep_' + f.key + '" value="5" min="1" max="' + f.max + '" style="width:80px;margin:0;" oninput="cronSync()"> ' + f.label.toLowerCase() + 's</div>' +
+      '<div id="cr_' + f.key + '" style="display:none;margin-top:8px;" class="rowflex">From <input type="number" id="cfrom_' + f.key + '" value="' + f.min + '" min="' + f.min + '" max="' + f.max + '" style="width:80px;margin:0;" oninput="cronSync()"> to <input type="number" id="cto_' + f.key + '" value="' + f.max + '" min="' + f.min + '" max="' + f.max + '" style="width:80px;margin:0;" oninput="cronSync()"></div>' +
+      '<div id="cp_' + f.key + '" style="display:none;margin-top:8px;" class="cronpick">';
+    for(var v = f.min; v <= f.max; v++){
+      var lbl = f.names ? f.names[f.key === "month" ? v - 1 : v] + " " + v : String(v);
+      html += '<label><input type="checkbox" id="cpk_' + f.key + '_' + v + '" onchange="cronSync()"> ' + lbl + '</label>';
+    }
+    html += '</div></div>';
+  });
+  host.innerHTML = html;
+}
+function cronModeChange(key){
+  var mode = document.getElementById("cm_" + key).value;
+  cronState[key].mode = mode;
+  document.getElementById("cs_" + key).style.display = mode === "step" ? "flex" : "none";
+  document.getElementById("cr_" + key).style.display = mode === "range" ? "flex" : "none";
+  document.getElementById("cp_" + key).style.display = mode === "specific" ? "grid" : "none";
+  cronSync();
+}
+function cronFieldExpr(f){
+  var st = cronState[f.key];
+  if(st.mode === "every") return "*";
+  if(st.mode === "step"){
+    var n = parseInt(document.getElementById("cstep_" + f.key).value, 10);
+    return "*/" + (isNaN(n) || n < 1 ? 1 : n);
+  }
+  if(st.mode === "range"){
+    var a = document.getElementById("cfrom_" + f.key).value, b = document.getElementById("cto_" + f.key).value;
+    return (a === "" ? f.min : a) + "-" + (b === "" ? f.max : b);
+  }
+  var picked = [];
+  for(var v = f.min; v <= f.max; v++){
+    var box = document.getElementById("cpk_" + f.key + "_" + v);
+    if(box && box.checked) picked.push(v);
+  }
+  return picked.length ? picked.join(",") : "*";
+}
+function cronCurrentExpr(){
+  var manual = document.getElementById("cronManual");
+  if(document.activeElement === manual && manual.value.trim()) return manual.value.trim();
+  return CRON_FIELDS.map(cronFieldExpr).join(" ");
+}
+function cronSync(){
+  var expr = CRON_FIELDS.map(cronFieldExpr).join(" ");
+  document.getElementById("cronManual").value = expr;
+  cronRender(expr);
+}
+function cronRender(expr){
+  expr = expr || cronCurrentExpr();
+  document.getElementById("cronExprBig").textContent = expr;
+  var err = document.getElementById("cronErr"); err.textContent = "";
+  document.getElementById("cronHuman").textContent = cronTranslate(expr);
+  try {
+    var runs = cronNextRuns(expr, new Date(), 5);
+    var tz = "your local time";
+    try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch(e){}
+    document.getElementById("cronNext").innerHTML = runs.map(function(d, i){
+      return '<div class="rec"><div class="rt">Run ' + (i + 1) + " — " + dsEsc(d.toLocaleString()) + '</div><div class="rm">' + dsEsc(d.toLocaleDateString(undefined, { weekday: "long" })) + " · timezone: " + dsEsc(tz) + "</div></div>";
+    }).join("");
+  } catch(e){
+    err.textContent = e.message;
+    document.getElementById("cronNext").innerHTML = "";
+  }
+  window._cronCurrent = expr;
+}
+function cronPreset(expr){
+  document.getElementById("cronManual").value = expr;
+  cronRender(expr);
+  document.getElementById("cronManual").focus();
+}
+function cronCopy(){
+  var expr = document.getElementById("cronExprBig").textContent;
+  navigator.clipboard.writeText(expr).then(function(){ alert("Cron expression copied: " + expr); });
+}
+function cronSave(){
+  var label = document.getElementById("cronSaveLabel").value.trim();
+  var expr = window._cronCurrent || cronCurrentExpr();
+  if(!label){ alert("Give this expression a label first."); return; }
+  DSRecords.create({ label: label, expression: expr, notes: "" });
+  dsRenderRecordList(); alert("Expression saved into My Cron Expressions below.");
+}
+function DS_TOOL_INIT(){ cronBuildFields(); cronSync(); }
+
+</script>
+</body>
+</html>
